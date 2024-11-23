@@ -1,3 +1,8 @@
+:root {
+  --cell-size: 120px;
+  --mark-size: calc(var(--cell-size) * 0.9);
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -10,4 +15,146 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.tictactoe {
+  width: 100vw;
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  justify-items: center;
+  align-items: center;
+  grid-template-columns: repeat(3, auto);
+}
+
+
+.board-cell {
+  width: var(--cell-size);
+  height: var(--cell-size);
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+  font-size: var(--mark-size);
+}
+
+.board-cell:first-child,
+.board-cell:nth-child(2),
+.board-cell:nth-child(3) {
+  border-top: none;
+}
+
+.board-cell:nth-child(3n + 1) {
+  border-left: none;
+}
+
+.board-cell:nth-child(3n + 3) {
+  border-right: none;
+}
+
+.board-cell:last-child,
+.board-cell:nth-child(8),
+.board-cell:nth-child(7) {
+  border-bottom: none;
+}
+
+.board-cell.x,
+.board-cell.circle {
+  cursor: not-allowed;
+}
+
+.board-cell.x::before,
+.board-cell.x::after,
+.board-cell.circle::before {
+  background-color: black;
+}
+
+.tictactoe.x .board-cell:not(.x):not(.circle):hover::before,
+.tictactoe.x .board-cell:not(.x):not(.circle):hover::after,
+.tictactoe.circle .board-cell:not(.x):not(.circle):hover::before {
+  background-color: lightgrey;
+}
+
+.board-cell.x::before,
+.board-cell.x::after,
+.tictactoe.x .board-cell:not(.x):not(.circle):hover::before,
+.tictactoe.x .board-cell:not(.x):not(.circle):hover::after {
+  content: "";
+  position: absolute;
+  width: calc(var(--mark-size) * 0.15);
+  height: var(--mark-size);
+}
+
+.board-cell.x::before,
+.tictactoe.x .board-cell:not(.x):not(.circle):hover::before {
+  transform: rotate(45deg);
+}
+
+.board-cell.x::after,
+.tictactoe.x .board-cell:not(.x):not(.circle):hover::after {
+  transform: rotate(-45deg);
+}
+
+.board-cell.circle::before,
+.board-cell.circle::after,
+.tictactoe.circle .board-cell:not(.x):not(.circle):hover::before,
+.tictactoe.circle .board-cell:not(.x):not(.circle):hover::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+}
+
+.board-cell.circle::before,
+.tictactoe.circle .board-cell:not(.x):not(.circle):hover::before {
+  width: var(--mark-size);
+  height: var(--mark-size);
+}
+
+.board-cell.circle::after,
+.tictactoe.circle .board-cell:not(.x):not(.circle):hover::after {
+  width: calc(var(--mark-size) * 0.7);
+  height: calc(var(--mark-size) * 0.7);
+  background-color: white;
+}
+
+.winning-msg {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.9);
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 2rem;
+  flex-direction: column;
+}
+
+.winning-msg button {
+  font-size: 2rem;
+  background-color: white;
+  border: 1px solid black;
+  padding: 0.25em 0.5em;
+  cursor: pointer;
+}
+
+.winning-msg button:hover {
+  background-color: black;
+  color: white;
+  border-color: white;
+}
+
+.winning-msg.show {
+  display: flex;
 }
